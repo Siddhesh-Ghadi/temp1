@@ -51,4 +51,5 @@ matrix:
 
 script:
   -  "travis_wait 60 sleep 3600 &"
+  -  chmod +x ./conda-recipes/build_scripts/run_docker_build.sh
   -  ./conda-recipes/build_scripts/run_docker_build.sh pysurvival-feedstock
