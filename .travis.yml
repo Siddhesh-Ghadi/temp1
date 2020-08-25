@@ -49,7 +49,14 @@ matrix:
       arch: amd64
       language: generic
 
+sudo: required
+
 script:
+  -  ifconfig
+  -  sudo systemctl stop docker
+  -  sudo cat /etc/docker/daemon.json
+  -  sudo sed -i 's/1460/1300/g' /etc/docker/daemon.json
+  -  sudo systemctl start docker
   -  "travis_wait 60 sleep 3600 &"
   -  chmod +x ./conda-recipes/build_scripts/run_docker_build.sh
   -  ./conda-recipes/build_scripts/run_docker_build.sh pysurvival-feedstock
