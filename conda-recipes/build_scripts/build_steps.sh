@@ -29,6 +29,7 @@ conda-build:
 
 CONDARC
 
+conda update -y -n base -c defaults conda
 conda config --prepend channels https://public.dhe.ibm.com/ibmdl/export/pub/software/server/ibm-ai/conda/
 export IBM_POWERAI_LICENSE_ACCEPT=yes
 
