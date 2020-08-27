@@ -29,10 +29,13 @@ conda-build:
 
 CONDARC
 
+whoami
+which sudo
+
 conda config --prepend channels https://public.dhe.ibm.com/ibmdl/export/pub/software/server/ibm-ai/conda/
 export IBM_POWERAI_LICENSE_ACCEPT=yes
 
-conda install --yes --debug conda-forge-ci-setup=2 conda-build=3.19.2 -c conda-forge
+sudo conda install --yes --debug conda-forge-ci-setup=2 conda-build=3.19.2 -c conda-forge
 
 conda install -y git
 
