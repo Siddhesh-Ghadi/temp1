@@ -1,62 +1,11 @@
-# (C) Copyright IBM Corp. 2018, 2019. All Rights Reserved.
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#     http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.#
-#
-#
-# All jobs defined in this file will fire when a PR is pushed.
-# For now, this file should be included in the PR and only include
-# the package(s) being addressed.
+language: python
+arch: ppc64le
+dist: bionic
+virtualenv:
+  system_site_packages: true
 
-env:
-  global:
-    # The BINSTAR Token for uploading to anaconda.org/powerai
-    - secure: "JZRf0nvjA0bNtlHCo2FiF9Xls11cYLoEK4JComWELDq0Qi1wOtlORR9t9RgyOCeldUt0n8ZiDtGVh42jCyI9xqo+lMpzZsp4GWu3apMSiDfFRNhDrakYxU1FMefathMHBCTk8rmq+P1LX7i/V+wPbNyzoSoNzcci3FmEc6eRUEGM/sBgHqH/xyvRFGZnSXbOMTigzgVSruZOVtL6opxHfo1RnxlU/dR5lytKIKm00r+GPK1w9tuwOPTdGpZUaWA6/aoxMQkUNnKqrZq382xBJ6TFgzmkkY80wJFnvchg0NuPqI7oNoA8z30W0vgYbZ7nno3SExjoCYbwCLWPlwIwsCEipEUG1lFPvVwAMELkCWu22JX95e34ZKxd5SR143/509CFMKHK5UrvLqg4tI7EgjrRpLcEI8utvNdjTCp/KUOcXbLq+cw1TMnzDwFuIdgPfsKGrTNreuaiHxCdt2NKuy8oD497WcMOUpq4rWoWXjDXeUfwxOt6GEH1F07Em5Ng0mSiwyCHxiL5XERpYj4lAnSnMBIaIXaHOWlGpron0jAtcpTu3lIY2rF7zdpUFSGNVnaiwwHUD7RDxy96zc/ig0X7DVIofeNTTML/rYsHEbB+hO92sBll+lxEq1xjeAO8Khsp0ohJLOyM3iglBgHxXrSfLhcYk6pmKrOqi1onJK0="
-
-# Only perform Travis-CI auto builds for these branches
-branches:
-  only:
-    - master
-
-matrix:
-  include:
-    - env: CONFIG=linux_ppc64le_python3.6 UPLOAD_PACKAGES=True DOCKER_IMAGE=ibmcom/powerai:1.6.2-pytorch-ubuntu18.04-py36-ppc64le
-      os: linux
-      arch: ppc64le
-      language: generic
-
-    - env: CONFIG=linux_ppc64le_python3.7 UPLOAD_PACKAGES=True DOCKER_IMAGE=ibmcom/powerai:1.6.2-pytorch-ubuntu18.04-py37-ppc64le
-      os: linux
-      arch: ppc64le
-      language: generic
-
-    - env: CONFIG=linux_python3.6 UPLOAD_PACKAGES=True DOCKER_IMAGE=ibmcom/powerai:1.6.2-pytorch-ubuntu18.04-py36-x86_64
-      os: linux
-      arch: amd64
-      language: generic
-
-    - env: CONFIG=linux_python3.7 UPLOAD_PACKAGES=True DOCKER_IMAGE=ibmcom/powerai:1.6.2-pytorch-ubuntu18.04-py37-x86_64
-      os: linux
-      arch: amd64
-      language: generic
-
-sudo: required
+python: "3.6"
 
 script:
-  -  ifconfig
-  -  sudo systemctl stop docker
-  -  sudo cat /etc/docker/daemon.json
-  -  sudo sed -i 's/1460/1300/g' /etc/docker/daemon.json
-  -  sudo systemctl start docker
-  -  "travis_wait 60 sleep 3600 &"
-  -  chmod +x ./conda-recipes/build_scripts/run_docker_build.sh
-  -  ./conda-recipes/build_scripts/run_docker_build.sh pysurvival-feedstock
+  - arch
+  - python --version
